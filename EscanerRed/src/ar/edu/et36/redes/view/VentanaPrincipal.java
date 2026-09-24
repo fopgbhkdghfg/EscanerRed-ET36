@@ -54,13 +54,12 @@ public class VentanaPrincipal extends JFrame {
 
         add(panelCampos, BorderLayout.NORTH);
 
-        // --- PANEL CENTRAL: TABLA DE RESULTADOS ---
         String[] columnas = {"IP", "Nombre equipo", "Activo", "Tiempo (ms)"};
         
         modelTabla = new DefaultTableModel(columnas, 0) {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 2) return Boolean.class; // Renderiza Checkbox para 'Activo'
+                if (columnIndex == 2) return Boolean.class; 
                 return String.class;
             }
 
@@ -76,7 +75,6 @@ public class VentanaPrincipal extends JFrame {
 
         add(new JScrollPane(tablaResultados), BorderLayout.CENTER);
 
-        // --- PANEL INFERIOR: BARRA, ESTADO Y BOTONES ---
         JPanel panelInferior = new JPanel();
         panelInferior.setLayout(new BoxLayout(panelInferior, BoxLayout.Y_AXIS));
 
@@ -109,7 +107,6 @@ public class VentanaPrincipal extends JFrame {
 
         add(panelInferior, BorderLayout.SOUTH);
 
-        // --- EVENTOS ---
         btnIniciar.addActionListener(e -> ejecutarEscaneo());
         btnDetener.addActionListener(e -> detenerEscaneo());
         btnLimpiar.addActionListener(e -> limpiarTodo());
@@ -150,7 +147,6 @@ public class VentanaPrincipal extends JFrame {
                         String ip = listaIPs.get(i);
                         Dispositivo dev = null;
 
-                        // Realiza intentos según lo configurado
                         for (int r = 0; r < reintentos; r++) {
                             dev = service.escanearIP(ip);
                             if (dev.isConectado()) break;
@@ -170,7 +166,7 @@ public class VentanaPrincipal extends JFrame {
                         modelTabla.addRow(new Object[]{
                                 dev.getIp(),
                                 dev.getNombreHost(),
-                                dev.isConectado(), // Muestra Casilla Activada / Desactivada
+                                dev.isConectado(), 
                                 dev.isConectado() ? dev.getTiempoRespuestaMs() : ""
                         });
                     }
@@ -193,7 +189,7 @@ public class VentanaPrincipal extends JFrame {
             workerActual.execute();
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error en los parámetros ingresados.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error en los parametros ingresados.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
